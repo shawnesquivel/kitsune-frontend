@@ -16,9 +16,6 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <Head>
-        <Link rel="icon" href={"/favicon.ico"} />
-      </Head>
       <body className={instrumentSans.className}>
         <Navbar />
         <main className="flex flex-col pt-20 px-20">{children}</main>

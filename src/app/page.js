@@ -21,6 +21,10 @@ import {
  * Start with the UI.. no need to recreate!
  *
  *  */
+
+const LOCAL_ENDPOINT = "http://127.0.0.1:8000";
+const AWS_ENDPOINT = "http://35.167.111.84";
+
 const Chatbot = () => {
   // We'll set a default YouTube video so we don't have to copy and paste this every time
   const [userMessage, setUserMessage] = useState("Hi, what's up?");
@@ -85,7 +89,7 @@ const Chatbot = () => {
       // Clear the user message
       setUserMessage("");
 
-      const response = await fetch(`http://127.0.0.1:8000/chat`, {
+      const response = await fetch(`${AWS_ENDPOINT}/chat`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -134,7 +138,7 @@ const Chatbot = () => {
       });
       console.log({ body });
 
-      const response = await fetch(`http://127.0.0.1:8000/chat/messages`, {
+      const response = await fetch(`${AWS_ENDPOINT}/chat/messages`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -217,7 +221,6 @@ const Chatbot = () => {
                 >
                   <option value="gpt-3.5-turbo">⚡️ GPT-3.5-Turbo</option>
                   <option value="gpt-4">🧠 GPT-4</option>
-                  <option value="gpt-4-turbo">🧠⚡️ GPT-4 Turbo</option>
                 </select>
               </div>
 
