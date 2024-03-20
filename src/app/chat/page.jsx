@@ -22,8 +22,8 @@ import {
  *
  *  */
 
-LOCAL_ENDPOINT = "http://127.0.0.1:8000";
-AWS_ENDPOINT = "http://35.167.111.84";
+const LOCAL_ENDPOINT = "http://127.0.0.1:8000";
+const AWS_ENDPOINT = "http://35.167.111.84";
 
 const Chatbot = () => {
   // We'll set a default YouTube video so we don't have to copy and paste this every time
