@@ -40,6 +40,7 @@ const Chatbot = () => {
   // And we'll set an initial message as well, to make the UI look a little nicer.
   const [messages, setMessages] = useState([]);
   const [chatId, setChatId] = useState(getChatID()); // Initialize chatId state
+  const [isLoadingMessages, setIsLoadingMessages] = useState(false);
 
   useEffect(() => {
     // Define the async function inside the effect
@@ -160,6 +161,8 @@ const Chatbot = () => {
       // If there is no conversation ID, create one and store it in the cookies.
       // TODO: remove for testing: hardcoded ChatID
       // const chatId = TESTING_CHAT_ID;
+      setIsLoadingMessages(true);
+
       const chatId = getChatID();
 
       const response = await fetch(`${ENDPOINT}/chat/messages/${chatId}`, {
@@ -180,6 +183,8 @@ const Chatbot = () => {
       setMessages(resJson.data);
 
       setError("");
+
+      setIsLoadingMessages(false);
     } catch (err) {
       console.error(err);
       setError("Error fetching messages.");
@@ -277,11 +282,13 @@ const Chatbot = () => {
               >
                 New Chat
               </button>
-              <p>{chatId}</p>
+
+              {/* <p>Testing Purposes: {chatId}</p> */}
             </div>
             <ResultWithSources
               messages={messages}
               pngFile={`kitsune-${promptTemplate}`}
+              isLoadingMessages={isLoadingMessages}
             />
             <PromptBox
               prompt={userMessage}
@@ -290,7 +297,8 @@ const Chatbot = () => {
               placeHolderText={`Message your ${promptTemplate}...`}
               error={error}
             />
-            <div>{JSON.stringify(messages.slice(-2).reverse())}</div>
+            {/* Use this to visualize the messages object */}
+            {/* <div>{JSON.stringify(messages.slice(-2).reverse())}</div> */}
           </>
         }
       />

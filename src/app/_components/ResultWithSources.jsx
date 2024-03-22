@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback, memo } from "react";
 import Image from "next/image";
+import styles from "../_styles/spinner.module.css";
 
 // Memo: Do not re-render the component if props havent changed between re-renders
 const MessageItem = memo(({ message, pngFile, isLast }) => {
@@ -75,7 +76,12 @@ const MessageItem = memo(({ message, pngFile, isLast }) => {
   );
 });
 
-const ResultWithSources = ({ messages, pngFile, maxMsgs }) => {
+const ResultWithSources = ({
+  messages,
+  pngFile,
+  maxMsgs,
+  isLoadingMessages,
+}) => {
   const messagesContainerRef = useRef();
 
   useEffect(() => {
@@ -87,7 +93,6 @@ const ResultWithSources = ({ messages, pngFile, maxMsgs }) => {
 
   // E.g. Before we reach the max messages, we should add the justify-end property, which pushes messages to the bottom
   const maxMsgToScroll = maxMsgs || 5;
-
   return (
     <div
       ref={messagesContainerRef}
@@ -95,10 +100,18 @@ const ResultWithSources = ({ messages, pngFile, maxMsgs }) => {
         messages.length < maxMsgToScroll && "justify-end"
       }`}
     >
-      {messages &&
+      {/* Show loading spinner only when isLoadingMessages is true */}
+      {isLoadingMessages && (
+        <div className="flex justify-center items-center h-full">
+          <div className={styles.spinner}></div> {/* Use the spinner here */}
+        </div>
+      )}
+
+      {/* Display messages if isLoadingMessages is false, regardless of messages count */}
+      {!isLoadingMessages &&
         messages.map((message, index) => (
           <MessageItem
-            key={message.timestamp}
+            key={`${message.chatId}-${message.timestamp}`} // Ensuring unique key
             message={message}
             pngFile={pngFile}
           />
@@ -106,5 +119,4 @@ const ResultWithSources = ({ messages, pngFile, maxMsgs }) => {
     </div>
   );
 };
-
 export default ResultWithSources;
