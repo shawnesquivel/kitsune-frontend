@@ -3,8 +3,6 @@ import "./globals.css";
 import Footer from "./_components/Footer";
 import Navbar from "./_components/Navbar";
 import { instrumentSans } from "./_styles/fonts";
-import Head from "next/head";
-import Link from "next/link";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,8 +17,8 @@ export default function RootLayout({ children }) {
       <body className={instrumentSans.className}>
         <Navbar />
         <main className="flex flex-col pt-20 px-20">{children}</main>
+        <Footer />
       </body>
-      <Footer />
     </html>
   );
 }
