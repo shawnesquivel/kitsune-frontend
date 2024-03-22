@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback, memo } from "react";
 import Image from "next/image";
 
-const MessageItem = ({ message, pngFile, isLast }) => {
+// Memo: Do not re-render the component if props havent changed between re-renders
+const MessageItem = memo(({ message, pngFile, isLast }) => {
   const userImage = "/assets/images/green-square.png";
   const botImage = `/assets/images/${pngFile}.png`;
   const [showSources, setShowSources] = useState(false);
-  const playAudio = (audioUrl) => {
+  const playAudio = useCallback((audioUrl) => {
     const audio = new Audio(audioUrl);
     console.log({ audioUrl });
-    audio.play().catch((e) => console.error("Playback failed:", e)); // Handle any playback errors
-  };
-
+    audio.play().catch((e) => console.error("Playback failed:", e));
+  }, []);
   console.log({ message });
   return (
     <div className={`flex flex-col ${isLast ? "flex-grow" : ""}`}>
@@ -73,7 +73,7 @@ const MessageItem = ({ message, pngFile, isLast }) => {
       )}
     </div>
   );
-};
+});
 
 const ResultWithSources = ({ messages, pngFile, maxMsgs }) => {
   const messagesContainerRef = useRef();
@@ -97,7 +97,11 @@ const ResultWithSources = ({ messages, pngFile, maxMsgs }) => {
     >
       {messages &&
         messages.map((message, index) => (
-          <MessageItem key={index} message={message} pngFile={pngFile} />
+          <MessageItem
+            key={message.timestamp}
+            message={message}
+            pngFile={pngFile}
+          />
         ))}
     </div>
   );
