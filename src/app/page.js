@@ -23,7 +23,12 @@ import {
  *  */
 
 const LOCAL_ENDPOINT = "http://127.0.0.1:8000";
-const AWS_ENDPOINT = "http://35.167.111.84";
+const AWS_EC2_ENDPOINT = "http://35.167.111.84";
+const AWS_LAMBDA_ENDPOINT =
+  "https://jk88xtfj1j.execute-api.us-west-2.amazonaws.com/api";
+const TESTING_CHAT_ID = "hvz43xdu9xv09myyz5oz3nw";
+
+const ENDPOINT = AWS_LAMBDA_ENDPOINT;
 
 const Chatbot = () => {
   // We'll set a default YouTube video so we don't have to copy and paste this every time
@@ -57,6 +62,28 @@ const Chatbot = () => {
     fetchMessages();
   }, [chatId]); // Dependencies array
 
+  useEffect(() => {
+    // Test basic function
+    async function testLambda() {
+      await testEndpoint();
+    }
+
+    testLambda();
+  }, []);
+
+  const testEndpoint = async () => {
+    try {
+      console.log(`Testing Chalice Deployed: ${ENDPOINT}`);
+      const response = await fetch(`${ENDPOINT}`);
+      console.log({ response });
+
+      const resJson = await response.json();
+
+      console.log({ resJson });
+    } catch (err) {
+      console.log(`error testing the endpoint: ${err}`);
+    }
+  };
   const handlePromptChange = (e) => {
     setUserMessage(e.target.value);
   };
@@ -89,7 +116,7 @@ const Chatbot = () => {
       // Clear the user message
       setUserMessage("");
 
-      const response = await fetch(`${AWS_ENDPOINT}/chat`, {
+      const response = await fetch(`${ENDPOINT}/chat`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -131,19 +158,12 @@ const Chatbot = () => {
   const fetchPreviousMessages = async () => {
     try {
       // If there is no conversation ID, create one and store it in the cookies.
+      // TODO: remove for testing: hardcoded ChatID
+      // const chatId = TESTING_CHAT_ID;
       const chatId = getChatID();
 
-      const body = JSON.stringify({
-        chat_id: chatId,
-      });
-      console.log({ body });
-
-      const response = await fetch(`${AWS_ENDPOINT}/chat/messages`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: body,
+      const response = await fetch(`${ENDPOINT}/chat/messages/${chatId}`, {
+        method: "GET",
       });
 
       console.log({ response });
@@ -257,7 +277,7 @@ const Chatbot = () => {
               >
                 New Chat
               </button>
-              {/* <p>{chatId}</p> */}
+              <p>{chatId}</p>
             </div>
             <ResultWithSources
               messages={messages}

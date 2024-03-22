@@ -7,6 +7,7 @@ const MessageItem = ({ message, pngFile, isLast }) => {
   const [showSources, setShowSources] = useState(false);
   const playAudio = (audioUrl) => {
     const audio = new Audio(audioUrl);
+    console.log({ audioUrl });
     audio.play().catch((e) => console.error("Playback failed:", e)); // Handle any playback errors
   };
 
