@@ -32,10 +32,10 @@ const MessageItem = memo(({ message, pngFile, isLast }) => {
             style={{ maxWidth: "100%" }}
           >
             {message.message}
-            {message.audio && (
+            {message.audio_file_url && (
               // Repositioned the play button to be inline with the message, making it a part of the message flow
               <button
-                onClick={() => playAudio(message.audio)}
+                onClick={() => playAudio(message.audio_file_url)}
                 style={{ marginLeft: "8px" }}
                 className="inline-flex items-center justify-center rounded-full bg-gray-200 p-2 text-blue-500 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                 aria-label="Play Audio"

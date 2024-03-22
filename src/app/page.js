@@ -137,7 +137,7 @@ const Chatbot = () => {
         {
           message: resJson?.data?.response,
           type: "bot",
-          audio_file_url: resJson?.audio_link,
+          audio_file_url: resJson?.audio_file_url,
         },
       ]);
 
@@ -290,6 +290,7 @@ const Chatbot = () => {
               placeHolderText={`Message your ${promptTemplate}...`}
               error={error}
             />
+            <div>{JSON.stringify(messages.slice(-2).reverse())}</div>
           </>
         }
       />
