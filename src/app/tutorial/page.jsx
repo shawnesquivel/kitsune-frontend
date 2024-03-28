@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-
+import Button from "../_components/Button";
 const CHAT_LOCAL = "http://127.0.0.1:8000/tutorial";
 const TEST_ENDPOINT =
   "https://jk88xtfj1j.execute-api.us-west-2.amazonaws.com/api/";
@@ -8,13 +8,30 @@ const CHAT_ENDPOINT =
   "https://jk88xtfj1j.execute-api.us-west-2.amazonaws.com/api/tutorial";
 
 const ChatGPT = () => {
-  const [userInput, setUserInput] = useState(""); // Tracks the user's input
+  const [userInput, setUserInput] = useState("who made langchain"); // Tracks the user's input
   const [response, setResponse] = useState(null); // Stores the chatbot's response
   const [isLoading, setIsLoading] = useState(false); // Tracks loading state
 
   useEffect(() => {
     // on page load, do something
+    testEndpoint();
   }, []);
+
+  const testEndpoint = async () => {
+    try {
+      const response = await fetch(TEST_ENDPOINT, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const resJson = await response.json();
+      console.log({ resJson });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   // Function to handle the change in the input field
   const handleInputChange = (event) => {
     setUserInput(event.target.value);
@@ -52,28 +69,31 @@ const ChatGPT = () => {
     event.preventDefault(); // Prevent the default form submit behavior
     sendMessage();
   };
-
   return (
-    <div>
-      <h1>ChatGPT</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="max-w-md mx-auto my-10 p-5 border border-gray-200 rounded-lg shadow-lg">
+      <h1 className="text-2xl font-bold mb-4">ChatGPT</h1>
+      <form onSubmit={handleSubmit} className="mb-4">
         <input
           type="text"
           value={userInput}
           onChange={handleInputChange}
           placeholder="Type your message..."
+          className="px-4 py-2 mb-4 border border-gray-300 rounded-lg w-full"
         />
-        <button type="submit">Send</button>
+        <Button text="Send 1" onClick={handleSubmit} />
+        <Button text="Send 2" onClick={handleSubmit} />
+        <Button text="Send 3" onClick={handleSubmit} />
+        <Button text="Send 4" onClick={handleSubmit} />
       </form>
-      {/* Conditional rendering for loading state and response */}
       {isLoading ? (
-        <p>Sending message...</p>
+        <p className="text-gray-500">Sending message...</p>
       ) : (
-        // If resposne is true, display the next value
         response && (
           <>
-            <p>ChatGPT: </p>
-            <pre>{JSON.stringify(response, null, 2)}</pre>
+            <p className="text-gray-700 font-semibold">ChatGPT:</p>
+            <pre className="bg-gray-100 rounded p-3 text-wrap">
+              {JSON.stringify(response, null, 2)}
+            </pre>
           </>
         )
       )}
