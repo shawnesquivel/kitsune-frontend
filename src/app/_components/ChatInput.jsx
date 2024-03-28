@@ -1,6 +1,6 @@
 import { sourceCodePro } from "../_styles/fonts";
 
-const PromptBox = ({
+const ChatInput = ({
   prompt,
   handlePromptChange,
   handleSubmit,
@@ -47,4 +47,4 @@ const PromptBox = ({
   );
 };
 
-export default PromptBox;
+export default ChatInput;

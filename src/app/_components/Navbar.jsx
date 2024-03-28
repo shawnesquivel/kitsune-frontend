@@ -8,7 +8,6 @@ const Navbar = () => {
       <a href="/" className={`text-center`}>
         AI-41
       </a>
-      {/* Render HamburgerMenu component on the client side */}
       <p className={`text-center`}>AI FOR EVERYONE</p>
       <div className="hidden">
         <Link href="/">Home 🏡 </Link>

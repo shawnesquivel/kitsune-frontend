@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import PageHeader from "./_components/PageHeader";
-import PromptBox from "./_components/PromptBox";
-import ResultWithSources from "./_components/ResultWithSources";
+import ChatInput from "./_components/ChatInput";
+import ChatMessages from "./_components/ChatMessages";
 import Title from "./_components/Title";
 import TwoColumnLayout from "./_components/TwoColumnLayout";
 import {
@@ -195,7 +195,7 @@ const Chatbot = () => {
     <>
       <Title emoji="🦊" headingText="Chatbot" />
       <TwoColumnLayout
-        leftChildren={
+        leftColumn={
           <>
             <PageHeader
               heading="Kitsune AI"
@@ -273,7 +273,7 @@ const Chatbot = () => {
             </div>
           </>
         }
-        rightChildren={
+        rightColumn={
           <>
             <div className=" flex flex-col justify-end items-end">
               <button
@@ -285,12 +285,12 @@ const Chatbot = () => {
 
               {/* <p>Testing Purposes: {chatId}</p> */}
             </div>
-            <ResultWithSources
+            <ChatMessages
               messages={messages}
               pngFile={`kitsune-${promptTemplate}`}
               isLoadingMessages={isLoadingMessages}
             />
-            <PromptBox
+            <ChatInput
               prompt={userMessage}
               handlePromptChange={handlePromptChange}
               handleSubmit={handleSubmit}

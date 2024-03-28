@@ -76,12 +76,7 @@ const MessageItem = memo(({ message, pngFile, isLast }) => {
   );
 });
 
-const ResultWithSources = ({
-  messages,
-  pngFile,
-  maxMsgs,
-  isLoadingMessages,
-}) => {
+const ChatMessages = ({ messages, pngFile, maxMsgs, isLoadingMessages }) => {
   const messagesContainerRef = useRef();
 
   useEffect(() => {
@@ -119,4 +114,4 @@ const ResultWithSources = ({
     </div>
   );
 };
-export default ResultWithSources;
+export default ChatMessages;
