@@ -1,7 +1,7 @@
 /**
  * Helper functions for the Chatbot.
- *
  */
+
 export const generateUniqueID = () => {
   // Example: Generate a simple random ID. Consider using a more robust approach for production.
   return (

@@ -1,4 +1,7 @@
-/* styles/Spinner.module.css */
+/* 
+* Used as the loading spinner when chat messages are loading.
+* _styles/Spinner.module.css 
+*/
 .spinner {
     border: 4px solid rgba(0, 0, 0, 0.1);
     width: 36px;
