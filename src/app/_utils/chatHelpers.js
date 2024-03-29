@@ -33,6 +33,7 @@ export const generateTimeStamp = () => {
   // Get the current time stamp formatted as Epoch (number)
   return Math.floor(new Date().getTime() / 1000);
 };
+
 export const clearChatIDCookie = () => {
   // Set the cookie to expire in the past, effectively deleting it
   document.cookie = "chatId=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;";
