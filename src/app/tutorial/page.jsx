@@ -97,6 +97,15 @@ const ChatGPT = () => {
           </>
         )
       )}
+      {/* && operator */}
+      {true && <p>hello</p>}
+      {false && <p>hello</p>}
+
+      {/* ternary operator */}
+      <p>
+        what value will print?
+        {true ? "hello" : "world"}
+      </p>
     </div>
   );
 };
