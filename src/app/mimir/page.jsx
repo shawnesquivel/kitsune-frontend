@@ -14,16 +14,6 @@ import {
   clearChatIDCookie,
 } from "../_utils/chatHelpers";
 
-const LOCAL_ENDPOINT = "http://127.0.0.1:8000";
-const AWS_EC2_ENDPOINT = "http://35.167.111.84";
-const AWS_LAMBDA_ENDPOINT =
-  "https://jk88xtfj1j.execute-api.us-west-2.amazonaws.com/api";
-const AWS_LAMBDA_ENDPOINT_2 =
-  "https://dm9k979b9h.execute-api.us-west-2.amazonaws.com/api";
-const TESTING_CHAT_ID = "hvz43xdu9xv09myyz5oz3nw";
-
-const ENDPOINT = LOCAL_ENDPOINT;
-
 const Chatbot = () => {
   // We'll set a default YouTube video so we don't have to copy and paste this every time
   const [userMessage, setUserMessage] = useState("how to start a nextJS app?");
@@ -58,29 +48,6 @@ const Chatbot = () => {
     // fetchMessages();
   }, [chatId]); // Dependencies array
 
-  // todo - remove this
-  // useEffect(() => {
-  //   // Test basic function
-  //   async function testLambda() {
-  //     await testEndpoint();
-  //   }
-
-  //   testLambda();
-  // }, []);
-
-  const testEndpoint = async () => {
-    try {
-      console.log(`Testing Chalice Deployed: ${ENDPOINT}`);
-      const response = await fetch(`${ENDPOINT}`);
-      console.log({ response });
-
-      const resJson = await response.json();
-
-      console.log({ resJson });
-    } catch (err) {
-      console.log(`error testing the endpoint: ${err}`);
-    }
-  };
   const handlePromptChange = (e) => {
     setUserMessage(e.target.value);
   };
@@ -114,7 +81,7 @@ const Chatbot = () => {
       // Clear the user message
       setUserMessage("");
 
-      const response = await fetch(`${ENDPOINT}/chat`, {
+      const response = await fetch(`http://127.0.0.1:8000/chat`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
